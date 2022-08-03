@@ -24,9 +24,43 @@ def download_pubmed (keyword):
     return dataexp
     
 
-def mining_pubs(tipo):
-    """Docstring mining_pubs"""
-    if tipo == "AD":
-      a=9  
+def mapscience(archivo):
+    """Este comando genera un mapa de ciencia de los paises de los autores"""
+    contentsse = re.sub(r'\s+[Eceinlort]{10}\s+[aders]{7}.*','',archivo)
+    contentssc = re.sub(r'\s[\w._%+-]+@[\w.-]+\.[a-zA-Z]{1,4}','',contentsse)
+    contentsna = re.sub(r'\..\d.\,',',',contentssc)
+    contentsnu = re.sub(r'\..\d.','',contentsna)
+    x=contentsnu[1:].split('PMID-')
+    AD1=[]
+    for PMID in x:
+        q=PMID.split('\n')
+        for fila in q:
+            w=fila.split(' ')
+            if w[0] == 'AD':
+                e=fila.split(',')
+                AD1.append(e[-1])
     
-    return (a)
+    AD2=[]
+    for dire in AD1:
+        r=dire
+        t=dire.split(' ')
+        if t[0] == "AD":
+            u=t[-1]
+        AD2.append(u)
+    
+    b=0
+    AD3 =[0]*len(AD2)
+    for obj in AD2:
+        bytes(obj,encoding="utf8")
+        if obj != '':
+            g=obj
+            if g[0] == ' ':
+                g = re.sub (r'^\s','',g)
+            if g[-1] == '.':
+                g = re.sub (r'\.$','',g)
+            g = re.sub (r'\.$','',g)
+            g = re.sub (r'\s$','',g)
+        AD3[b]=g
+        b=b+1
+        
+    return AD3
